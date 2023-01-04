@@ -29,6 +29,7 @@ namespace DataCollector
             return result;
         }
 
+        //TODO: make it test capable
         private async Task<string> SendMessage(object value, CancellationToken cancellationToken)
         {
             var body = JsonSerializer.Serialize(value);

@@ -19,7 +19,7 @@ namespace DataCollectorTests.Infrastructure
             var configBuilder = new ConfigurationBuilder();
             config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile("appsettings.Tests.json")
+                .AddJsonFile("appsettings.Tests.json") //do not commit this guy
                 .AddEnvironmentVariables()
                 .Build();
             config.GetSection("RabbitMq").Bind(settings);

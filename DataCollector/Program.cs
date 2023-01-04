@@ -5,8 +5,12 @@ using RabbitMQ.Client;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<TrackerSettings>(builder.Configuration);
 builder.Services.AddSingleton<IDataCollectorService, DataCollectorService>();
-builder.Services.AddSingleton<IConnectionFactory>(new ConnectionFactory { Endpoint = new AmqpTcpEndpoint(new Uri(builder.Configuration["TrackerSettings:ConnectionString"])) });
-builder.Services.AddTransient(x => x.GetRequiredService<IConnectionFactory>().CreateConnection());
+builder.Services.AddSingleton<IConnectionFactory>(new ConnectionFactory()
+    { Endpoint = new AmqpTcpEndpoint(new Uri(builder.Configuration["TrackerSettings:ConnectionString"])) }
+);
+builder.Services.AddTransient(x => x.GetRequiredService<IConnectionFactory>().CreateConnection(
+    //new List<AmqpTcpEndpoint> { new AmqpTcpEndpoint(new Uri(builder.Configuration["TrackerSettings:ConnectionString"])) }
+    ));
 builder.Services.AddTransient(x => x.GetRequiredService<IConnection>().CreateModel());
 
 var app = builder.Build();

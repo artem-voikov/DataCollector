@@ -19,7 +19,7 @@ public class TrackRepository : ITrackRepository
     public async Task Store(string message)
     {
         var request = JsonSerializer.Deserialize<TrackRequest>(message);
-        var row = $"{request.UtcNow}|{request.Referer.PrintIfEmpty("null")}|{request.UserAgent.PrintIfEmpty("null")}|{request.Ip}";
+        var row = $"{request?.UtcNow}|{request.Referer.PrintIfEmpty("null")}|{request.UserAgent.PrintIfEmpty("null")}|{request.Ip}";
         await storage.Log($"{row}\n");
     }
 }

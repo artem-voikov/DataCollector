@@ -1,4 +1,5 @@
 ﻿using DataCollector;
+using Microsoft.Extensions.Options;
 
 namespace DataStorage
 {
@@ -6,11 +7,12 @@ namespace DataStorage
     {
         private readonly TrackerSettings trackerSettings;
 
-        public FileStorage(TrackerSettings trackerSettings)
+        public FileStorage(IOptions<TrackerSettings> trackerSettings)
         {
-            this.trackerSettings = trackerSettings;
+            this.trackerSettings = trackerSettings.Value;
         }
 
+        //TODO: make it test capable
         public async Task Log(string row) => await File.AppendAllTextAsync(trackerSettings.FileName, row);
 
     }
